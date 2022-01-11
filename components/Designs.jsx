@@ -42,7 +42,7 @@ const Designs = () => {
   React.useEffect(() => {
     const unsucscribe = onAuthStateChanged(auth, (user) => {
       if (user) setUser(user);
-      else console.log("user not found:/");
+      else setUser(null)
     });
     return () => unsucscribe();
   }, []);
