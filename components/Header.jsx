@@ -22,11 +22,20 @@ const links = [
 
 const Header = () => {
   const [user, setUser] = React.useState(null);
-  useEffect(() => {
-    return () => {
-      cleanup;
-    };
-  }, [input]);
+  React.useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const signoutUser = () => {
+    signOut(auth);
+  };
 
   return (
     <div className="w-full fixed top-0 backdrop-blur-3xl">
@@ -45,11 +54,24 @@ const Header = () => {
               </Link>
             </li>
           ))}
-          <li>
-            <button className="w-fit bg-gradient-to-r from-red-700 to to-pink-700 p-3 rounded-md text-white hover:shadow-2xl hover:shadow-red-700">
-              Signout
-            </button>
-          </li>
+          {user ? (
+            <li>
+              <button
+                onClick={() => signoutUser()}
+                className="w-fit bg-gradient-to-r from-red-700 to to-pink-700 p-3 rounded-md text-white hover:shadow-2xl hover:shadow-red-700"
+              >
+                Signout
+              </button>
+            </li>
+          ) : (
+            <li>
+              <Link href="#designs">
+                <button className="w-fit bg-gradient-to-r from-red-700 to to-pink-700 p-3 rounded-md text-white hover:shadow-2xl hover:shadow-red-700">
+                  Login
+                </button>
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
     </div>

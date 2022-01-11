@@ -53,12 +53,12 @@ const Designs = () => {
         Designs
       </h3>
       {!user ? (
-        <div className="w-full h-5/6 flex flex-col md:flex-row items-center justify-center px-5">
-          <div className="md:w-1/2">
+        <div className="w-full h-5/6 flex flex-col md:flex-row items-center justify-center md:px-5">
+          <div className="md:w-1/2 w-5/6">
             <h4>Login here in order to see the available templates</h4>
           </div>
           {account ? (
-            <div className="md:w-1/2">
+            <div className="md:w-1/2 w-full">
               <form className="flex flex-col space-y-2 md:w-5/6 bg-white p-4 rounded-lg h-full shadow-2xl">
                 <h4 className="text-4xl font-extrabold">Login</h4>
                 <label htmlFor="email">Enter Email</label>
@@ -95,7 +95,7 @@ const Designs = () => {
               </form>
             </div>
           ) : (
-            <div className="md:w-1/2">
+            <div className="md:w-1/2 w-full">
               <form className="flex flex-col space-y-2 md:w-5/6 bg-white p-4 rounded-lg h-full shadow-2xl">
                 <h4 className="text-4xl font-extrabold">SignUp</h4>
                 <label htmlFor="email">Enter Email</label>
