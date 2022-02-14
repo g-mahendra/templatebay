@@ -3,7 +3,7 @@ import { auth, onAuthStateChanged, db, collection, getDocs } from "../firebase";
 import { useRouter } from "next/router";
 import Card from "../components/Card";
 
-const designs = () => {
+const Designs = () => {
   const router = useRouter();
   const [user, setUser] = React.useState(null);
   const [templates, setTemplates] = React.useState([]);
@@ -45,4 +45,4 @@ const designs = () => {
   );
 };
 
-export default designs;
+export default Designs;
