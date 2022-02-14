@@ -4,7 +4,12 @@ import {
   onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  db,
+  collection,
+  getDocs,
 } from "../firebase";
+
+import Card from "./Card";
 
 const Designs = () => {
   const [user, setUser] = React.useState(null);
@@ -12,6 +17,7 @@ const Designs = () => {
   const [password, setPasword] = React.useState("");
   const [confirmPassword, setconfirmPassword] = React.useState("");
   const [account, setAccount] = React.useState(true);
+  const [templates, setTemplates] = React.useState([]);
 
   const toggleAccount = () => {
     setAccount(!account);
@@ -40,9 +46,18 @@ const Designs = () => {
   };
 
   React.useEffect(() => {
-    const unsucscribe = onAuthStateChanged(auth, (user) => {
-      if (user) setUser(user);
-      else setUser(null)
+    const unsucscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setUser(user);
+        const data = await getDocs(collection(db, "templates"));
+        var tempData = [];
+
+        data.forEach((doc) => {
+          tempData.push(doc.data());
+        });
+
+        setTemplates(tempData);
+      } else setUser(null);
     });
     return () => unsucscribe();
   }, []);
@@ -59,27 +74,33 @@ const Designs = () => {
           </div>
           {account ? (
             <div className="md:w-1/2 w-full">
-              <form className="flex flex-col space-y-2 md:w-5/6 bg-white p-4 rounded-lg h-full shadow-2xl">
+              <form
+                onSubmit={signin}
+                className="flex flex-col space-y-2 md:w-5/6 bg-white p-4 rounded-lg h-full shadow-2xl"
+              >
                 <h4 className="text-4xl font-extrabold">Login</h4>
                 <label htmlFor="email">Enter Email</label>
                 <input
+                  required
                   value={email}
                   id="email"
                   className="p-2 bg-gray-100 rounded-md"
                   type="email"
                   onChange={(e) => setEmail(e.target.value)}
+                  placeholder="example@domain.com"
                 />
                 <label htmlFor="password">Enter Password</label>
                 <input
+                  required
                   value={password}
                   id="password"
                   className="p-2 bg-gray-100 rounded-md"
                   type="password"
                   onChange={(e) => setPasword(e.target.value)}
+                  placeholder="Enter the password"
                 />
                 <div>
                   <button
-                    onClick={signin}
                     type="submit"
                     className="px-5 py-2 text-white bg-teal-500 rounded-lg"
                   >
@@ -96,35 +117,43 @@ const Designs = () => {
             </div>
           ) : (
             <div className="md:w-1/2 w-full">
-              <form className="flex flex-col space-y-2 md:w-5/6 bg-white p-4 rounded-lg h-full shadow-2xl">
+              <form
+                onSubmit={signup}
+                className="flex flex-col space-y-2 md:w-5/6 bg-white p-4 rounded-lg h-full shadow-2xl"
+              >
                 <h4 className="text-4xl font-extrabold">SignUp</h4>
                 <label htmlFor="email">Enter Email</label>
                 <input
+                  required
                   value={email}
                   id="email"
                   className="p-2 bg-gray-100 rounded-md"
                   type="email"
                   onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter email address"
                 />
                 <label htmlFor="password">Enter Password</label>
                 <input
+                  required
                   value={password}
                   id="password"
                   className="p-2 bg-gray-100 rounded-md"
                   type="password"
                   onChange={(e) => setPasword(e.target.value)}
+                  placeholder="Enter the password"
                 />
                 <label htmlFor="confirmPassword">Confirm Password</label>
                 <input
+                  required
                   value={confirmPassword}
                   id="confirmPassword"
                   className="p-2 bg-gray-100 rounded-md"
                   type="password"
                   onChange={(e) => setconfirmPassword(e.target.value)}
+                  placeholder="Confirm your password"
                 />
                 <div>
                   <button
-                    onClick={signup}
                     type="submit"
                     className="px-5 py-2 text-white bg-teal-500 rounded-lg"
                   >
@@ -142,8 +171,12 @@ const Designs = () => {
           )}
         </div>
       ) : (
-        <div className="w-full h-full flex flex-col items-center justify-center">
-          Some user
+        <div className="w-full h-full flex flex-col md:flex-row p-4">
+          {templates
+            ? templates.map((item, index) => {
+                return <Card key={index} item={item} />;
+              })
+            : null}
         </div>
       )}
     </div>

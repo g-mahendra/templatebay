@@ -4,8 +4,10 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  signOut
+  signOut,
 } from "firebase/auth";
+
+import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 const clientCredentials = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -24,6 +26,7 @@ if (!getApp.length) {
 }
 
 const auth = getAuth(app);
+const db = getFirestore();
 
 export {
   app,
@@ -31,5 +34,8 @@ export {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  signOut
+  signOut,
+  db,
+  collection,
+  getDocs,
 };

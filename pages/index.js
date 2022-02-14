@@ -1,10 +1,11 @@
-import {Hero, Designs} from "../components/ComponentProvider"
+import React from "react";
+import { Hero, Designs } from "../components/ComponentProvider";
 
 const Home = () => {
   return (
     <div>
-      <Hero/>
-      <Designs/>
+      <Hero />
+      <Designs />
     </div>
   );
 };
