@@ -6,17 +6,12 @@ const links = [
   {
     id: "1",
     name: "Home",
-    link: "#hero",
+    link: "/",
   },
   {
     id: "2",
     name: "Templates",
-    link: "#designs",
-  },
-  {
-    id: "3",
-    name: "Contact Us",
-    link: "#contact",
+    link: "/designs",
   },
 ];
 
@@ -48,7 +43,7 @@ const Header = () => {
             <img src="/logo.svg" alt="Website Logo" height={40} width={40} />
             <h1 className="md:text-xl">TemplateBay</h1>
           </div>
-          <ul className="w-1/3 hidden md:flex flex-row items-center justify-between">
+          <ul className="w-1/4 hidden md:flex flex-row items-center justify-between">
             {links.map((link) => (
               <li key={link.id}>
                 <Link href={`${link.link}`}>
@@ -69,7 +64,7 @@ const Header = () => {
               </li>
             ) : (
               <li>
-                <Link href="#designs">
+                <Link href="/authflow">
                   <button className="w-fit bg-gradient-to-r from-red-700 to to-pink-700 p-3 rounded-md text-white hover:shadow-2xl hover:shadow-red-700">
                     Login
                   </button>
@@ -118,7 +113,7 @@ const Header = () => {
             </li>
           ) : (
             <li>
-              <Link href="#designs">
+              <Link href="/authflow">
                 <button className="w-fit bg-gradient-to-r from-red-700 to to-pink-700 p-3 rounded-md text-white hover:shadow-2xl hover:shadow-red-700">
                   Login
                 </button>
