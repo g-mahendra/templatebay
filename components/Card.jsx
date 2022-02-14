@@ -16,6 +16,7 @@ const Card = ({ item, index }) => {
         <p className="text-xs">{item.description}</p>
         <div className="w-full flex flex-row items-center justify-evenly my-3">
           <a
+            rel="noreferrer"
             href={item.previewUrl}
             target="_blank"
             className=" bg-gradient-to-b from-blue-400 to-blue-500 text-white w-2/5 rounded-lg flex flex-row justify-center"
@@ -23,6 +24,7 @@ const Card = ({ item, index }) => {
             Preview
           </a>
           <a
+            rel="noreferrer"
             href={item.downloadUrl}
             target="_blank"
             className=" border-blue-500 bg-white w-2/5 rounded-lg flex flex-row justify-center"
